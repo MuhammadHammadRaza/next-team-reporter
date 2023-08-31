@@ -20,20 +20,9 @@ const LoginPage = () => {
     console.log(data);
     setLoading(true);
 
-    // axios
-    //   .post(`${process.env.BASE_URL}/auth/login`, data)
-    fetch(`${process.env.BASE_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((data) => {
-        // console.log("data.headers.get: ", data.headers.get());
-        console.log("data.headers.getset: ", data.headers.getSetCookie());
-        return data.json();
+    axios
+      .post(`${process.env.BASE_URL}/auth/login`, data, {
+        withCredentials: "include",
       })
       .then(function (response) {
         console.log(response);
@@ -52,7 +41,7 @@ const LoginPage = () => {
       })
       .catch(function (error) {
         console.log(error);
-        toast.error(error.response.data.message, {
+        toast.error(error.response?.data.message || error.message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

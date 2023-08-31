@@ -21,7 +21,9 @@ const SignupPage = () => {
     console.log(data);
     setLoading(true);
     axios
-      .post(`${process.env.BASE_URL}/auth/signup`, data)
+      .post(`${process.env.BASE_URL}/auth/signup`, data, {
+        withCredentials: "include",
+      })
       .then(function (response) {
         console.log(response);
         toast.success("Signup successfully", {
@@ -34,12 +36,11 @@ const SignupPage = () => {
           progress: undefined,
           theme: "light",
         });
-        setLoading(false);
         router.push("/dashboard");
       })
       .catch(function (error) {
         console.log(error);
-        toast.error(error.response.data.message, {
+        toast.error(error.response.data?.message || "Something went wrong", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -49,6 +50,7 @@ const SignupPage = () => {
           progress: undefined,
           theme: "light",
         });
+      }).finally(()=>{
         setLoading(false);
       });
   };
@@ -163,7 +165,7 @@ const SignupPage = () => {
           isProcessing={loading}
           disabled={loading}
         >
-          {loading ? "" : "Signup"}
+          {loading ? "Signing up" : "Signup"}
         </Button>
         <div className="mt-3 text-center">
           <Link

@@ -16,24 +16,26 @@ const TeamsList = ({ teams, title, creatingTeam }) => {
         />
       )}
 
-      {teams.map((team, idx) => (
-        <Link key={idx} href={`/team/${team.id}`}>
+      {teams.map((team) => (
+        <Link key={team._id} href={`/team/${team._id}`}>
           <Card
             className="my-2 bg-slate-100 text-emerald-900"
             style={{ width: "80vw" }}
           >
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {team.name}
+              {team.teamName}
             </h5>
             <p className="font-normal text-base text-gray-700 dark:text-gray-400">
-              {team.members.length &&
-                (team.members.length == 1
-                  ? team.members[0].name
+              {"Members: "}
+              {team.members?.length != 0
+                ? team.members.length == 1
+                  ? team.members[0].fullName
                   : team.members.length == 2
-                  ? `${team.members[0].name} and ${team.members[1].name}`
-                  : `${team.members[0].name}, ${team.members[1].name} and ${
-                      team.members.length - 2
-                    } other(s)`)}
+                  ? `${team.members[0].fullName} and ${team.members[1].fullName}`
+                  : `${team.members[0].fullName}, ${
+                      team.members[1].fullName
+                    } and ${team.members.length - 2} other(s)`
+                : "None"}
             </p>
           </Card>
         </Link>

@@ -1,3 +1,4 @@
+"use client"
 import SignupPage from "./SignupPage";
 
 const page = () => {

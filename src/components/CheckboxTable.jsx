@@ -147,17 +147,17 @@ export default function CheckboxTable({members, handleCheckBox}) {
       <Table.Head>
         <Table.HeadCell className="p-4">{/* <Checkbox /> */}</Table.HeadCell>
         <Table.HeadCell>Name</Table.HeadCell>
-        <Table.HeadCell>Position</Table.HeadCell>
+        {/* <Table.HeadCell>Email</Table.HeadCell> */}
       </Table.Head>
       <Table.Body className="divide-y">
         {members.map((data, idx) => (
           <Table.Row
-            key={idx}
+            key={data._id}
             className="bg-white dark:border-gray-700 dark:bg-gray-800"
           >
             <Table.Cell className="p-4">
               <Checkbox
-                id={idx}
+                id={data._id}
                 checked={data.isChecked ? true : false}
                 // checked={true}
                 onChange={(e) => handleCheckBox(e, idx)}
@@ -167,11 +167,11 @@ export default function CheckboxTable({members, handleCheckBox}) {
               onClick={(e) => handleCheckBox(e, idx)}
               className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
             >
-              {data.name}
+              {data.fullName}
             </Table.Cell>
-            <Table.Cell onClick={(e) => handleCheckBox(e, idx)}>
-              {data.position}
-            </Table.Cell>
+            {/* <Table.Cell onClick={(e) => handleCheckBox(e, idx)}>
+              {data.email}
+            </Table.Cell> */}
           </Table.Row>
         ))}
       </Table.Body>

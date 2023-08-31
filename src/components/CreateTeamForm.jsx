@@ -1,144 +1,181 @@
 "use client";
 
 import { Button, Label, Modal, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckboxTable from "./CheckboxTable";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { add } from "@/Redux/adminTeamSlice";
 
-const dummyData = [
-  {
-    id: "1",
-    name: "Hammad",
-    position: "Intern",
-    isChecked: false,
-  },
-  {
-    id: "2",
-    name: "Muawiya",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "3",
-    name: "Aqib",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "4",
-    name: "Hassan",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-  {
-    id: "5",
-    name: "Test",
-    position: "Senior Developer",
-    isChecked: false,
-  },
-];
+// const dummyData = [
+//   {
+//     id: "1",
+//     name: "Hammad",
+//     position: "Intern",
+//     isChecked: false,
+//   },
+//   {
+//     id: "2",
+//     name: "Muawiya",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "3",
+//     name: "Aqib",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "4",
+//     name: "Hassan",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+//   {
+//     id: "5",
+//     name: "Test",
+//     position: "Senior Developer",
+//     isChecked: false,
+//   },
+// ];
 
 export default function CreateTeamForm({ setCreatingTeam }) {
   const [openModal, setOpenModal] = useState(undefined);
 
   const [membersListUI, setMembersListUI] = useState(false);
   const [teamName, setTeamName] = useState("");
-  const [members, setMembers] = useState(dummyData);
+  const [members, setMembers] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const getUsersApi = async () => {
+    const { data } = await axios.get(`${process.env.BASE_URL}/user/get-all`, {
+      withCredentials: true,
+    });
+    console.log(data);
+    if (data.status) {
+      const users = data.data.users.map((user) => ({
+        ...user,
+        isChecked: false,
+      }));
+      setMembers(users);
+    }
+  };
+
+  const createTeamApi = async (payload) => {
+    const { data } = await axios.post(
+      `${process.env.BASE_URL}/team/create`,
+      payload,
+      { withCredentials: true }
+    );
+    if (data.status) {
+      // setMembers(prevData => prevData.unshift(data.data))
+      // console.log(data);
+      dispatch(add(data.data));
+    }
+    setMembers([]);
+    setCreatingTeam(false);
+  };
+  // useEffect(() => {
+  //   getUsersApi();
+  // }, []);
 
   const handleCheckBox = (e, id) => {
     const prev = [...members];
@@ -153,6 +190,7 @@ export default function CreateTeamForm({ setCreatingTeam }) {
   const handleNextOrSubmit = (e) => {
     e.preventDefault();
     if (!membersListUI) {
+      getUsersApi();
       /**
        * await
        * fetch users list
@@ -161,9 +199,10 @@ export default function CreateTeamForm({ setCreatingTeam }) {
       setMembersListUI(true);
       return;
     }
-    const newTeamMembers = members.filter((member) => member.isChecked);
+    let newTeamMembers = members.filter((member) => member.isChecked);
+    newTeamMembers = newTeamMembers.map((member) => member._id);
     const newTeam = {
-      name: teamName,
+      teamName,
       members: newTeamMembers,
     };
     console.log(newTeam);
@@ -172,6 +211,7 @@ export default function CreateTeamForm({ setCreatingTeam }) {
     setCreatingTeam(true);
     setOpenModal(undefined);
     setMembersListUI(false);
+    createTeamApi(newTeam);
   };
 
   return (
